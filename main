@@ -1,0 +1,28 @@
+import os
+import subprocess
+
+import os
+
+print("当前工作目录:", os.getcwd())
+
+
+def run_tests():
+    # 第一步：运行 pytest 生成 allure-results
+    pytest_cmd = "pytest ./testcases/api_test/test_03_login.py --alluredir=./report/allure-results"
+    print(f"运行命令: {pytest_cmd}")
+    subprocess.run(pytest_cmd, shell=True, check=True)
+
+    # 第二步：生成 allure 报告
+    allure_generate_cmd = "allure generate ./report/allure-results -o ./report/allure-report --clean"
+    print(f"运行命令: {allure_generate_cmd}")
+    subprocess.run(allure_generate_cmd, shell=True, check=True)
+
+    # 第三步：打开 allure 报告
+    allure_open_cmd = "allure open ./report/allure-report"
+    print(f"运行命令: {allure_open_cmd}")
+    subprocess.run(allure_open_cmd, shell=True, check=True)
+
+if __name__ == "__main__":
+    run_tests()
+
+
